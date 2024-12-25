@@ -1,50 +1,19 @@
-# React + TypeScript + Vite
+# California Community College Transfer Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is an app designed specifically for California Community College students to help them plan their course schedules and ensure they meet the requirements for transferring to UC and CSU schools.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Course Planning**: Easily plan and organize your courses to meet transfer requirements.
+- **UC and CSU Transfer Requirements**: Access up-to-date transfer requirements for University of California (UC) and California State University (CSU) systems.
+- **Streamlined Planning**: Use the Assist API to simplify and enhance your course planning experience.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Frontend
+- **React (TypeScript)**: For building a modern, scalable, and type-safe user interface.
+- **Tailwind CSS**: For fast and efficient styling with a utility-first CSS framework.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Backend
+- **Express**: A fast and lightweight Node.js framework for handling server-side logic.
+- **Assist API**: Integration for accessing transfer requirement data from Assist.org.
