@@ -1,11 +1,11 @@
 import "./Body.css";
 type BodyProps = {
-  page: string;
+  page: "school" | "required" | "course";
 }
 
 const Body = ({page}: BodyProps) => {
   console.log(page);
-  return <div className="body">{/* Content will go here */}</div>;
+  return <div className="body">{page}</div>;
 };
 
 export default Body;

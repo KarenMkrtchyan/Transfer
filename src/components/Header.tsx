@@ -2,26 +2,25 @@ import "./Header.css";
 import { Button } from "@/components/ui/button"
  
 type HeaderProps = {
-  title: string;
-  page: "school" | "required" | "course";
+  setPage: (page: "school" | "required" | "course") => void;
 }
 type ButtonProps = {
   title: string;
-  page: "school" | "required" | "course";
+  click: () => void;
 }
 
-function ButtonGhost({page, title}: ButtonProps) {
-  return <Button onClick={setPage} variant="ghost">{title}</Button>
+function ButtonGhost({title, click}: ButtonProps) {
+  return <Button onClick={click} variant="ghost">{title}</Button>
 }
 
 
-const Header = ({page}: HeaderProps) => {
+const Header = ({setPage}: HeaderProps) => {
   return (
     <header className="header">
       <nav className="nav">
-        <ButtonGhost title="Schools and Majors"/>
-        <ButtonGhost title="Required and Recommended" />
-        <ButtonGhost title="Course Plan"/>
+        <ButtonGhost click={()=>setPage("school")} title="Schools and Majors"/>
+        <ButtonGhost click={()=>setPage("required")} title="Required and Recommended" />
+        <ButtonGhost click={()=>setPage("course")} title="Course Plan"/>
       </nav>
     </header>
   );

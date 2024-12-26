@@ -1,15 +1,15 @@
 import React from "react";
-import "./App.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
+import "./App.css"
 
 const App: React.FC = () => {
-  const [page, setPage] = React.useState("school");
-  // console.log(page);
+  const [page, setPage] = React.useState<"school" | "required" | "course">("school");
+
   return (
     <div className="app-container">
-      <Header />
-      <Body page={page}/>
+      <Header setPage={setPage} />
+      <Body page={page} />
     </div>
   );
 };
