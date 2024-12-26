@@ -1,19 +1,27 @@
-import React from "react";
 import "./Header.css";
 import { Button } from "@/components/ui/button"
  
-export function ButtonGhost() {
-  return <Button variant="ghost">Ghost</Button>
+type HeaderProps = {
+  title: string;
+  page: "school" | "required" | "course";
+}
+type ButtonProps = {
+  title: string;
+  page: "school" | "required" | "course";
+}
+
+function ButtonGhost({page, title}: ButtonProps) {
+  return <Button onClick={setPage} variant="ghost">{title}</Button>
 }
 
 
-const Header: React.FC = () => {
+const Header = ({page}: HeaderProps) => {
   return (
     <header className="header">
       <nav className="nav">
-        <button className="nav-button">Schools and Majors</button>
-        <button className="nav-button">Required and Recommended Courses</button>
-        <button className="nav-button">Course Plan</button>
+        <ButtonGhost title="Schools and Majors"/>
+        <ButtonGhost title="Required and Recommended" />
+        <ButtonGhost title="Course Plan"/>
       </nav>
     </header>
   );

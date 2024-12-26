@@ -1,7 +1,10 @@
-import React from "react";
 import "./Body.css";
+type BodyProps = {
+  page: string;
+}
 
-const Body: React.FC = () => {
+const Body = ({page}: BodyProps) => {
+  console.log(page);
   return <div className="body">{/* Content will go here */}</div>;
 };
 
