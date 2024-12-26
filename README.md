@@ -11,9 +11,10 @@ This is an app designed specifically for California Community College students t
 ## Technologies Used
 
 ### Frontend
-- **React (TypeScript)**: For building a modern, scalable, and type-safe user interface.
-- **Tailwind CSS**: For fast and efficient styling with a utility-first CSS framework.
+- React (TypeScript)
+- Tailwind CSS 
+- shadcn/ui
 
 ### Backend
-- **Express**: A fast and lightweight Node.js framework for handling server-side logic.
-- **Assist API**: Integration for accessing transfer requirement data from Assist.org.
+- Express
+- Assist API

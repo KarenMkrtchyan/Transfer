@@ -1,5 +1,11 @@
 import React from "react";
 import "./Header.css";
+import { Button } from "@/components/ui/button"
+ 
+export function ButtonGhost() {
+  return <Button variant="ghost">Ghost</Button>
+}
+
 
 const Header: React.FC = () => {
   return (

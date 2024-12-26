@@ -1,3 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* COLOR VARIABLES */
+  --violate-50: rgb(245 243 255);
+  --volate-100: rgb(237 233 254);
+  --violate-500: rbg(139 92 246);
+  --violate-700: rbg(109 40 217);
+  --violate-950: rbg(46 16 101);
+
+  --purple-400: rbg(168 85 247);
+  --purple-700: rbg(126 34 206);
+
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -8,5 +25,9 @@ body {
     flex-direction: column;
     height: 100%;
     width: 100%;
+  }
+
+  button{
+    color:red;
   }
   
