@@ -13,7 +13,6 @@ function ButtonGhost({title, click}: ButtonProps) {
   return <Button onClick={click} variant="ghost">{title}</Button>
 }
 
-
 const Header = ({setPage}: HeaderProps) => {
   return (
     <header className="header">
