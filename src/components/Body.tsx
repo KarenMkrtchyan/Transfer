@@ -14,7 +14,7 @@ const Body = ({page}: BodyProps) => {
   } else if(page === "course") {
     return <div>Course</div>;
   }
-  return <div>404, No Tomfullery Allowed!</div>;
+  return <div>404, No Tomfoolery Allowed!</div>;
 };
 
 export default Body;
