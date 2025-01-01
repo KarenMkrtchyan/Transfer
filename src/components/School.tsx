@@ -10,7 +10,10 @@ const School = () => {
   const [schools, setSchool] = useState<School[]>([
     { name: "No Added Schools Yet", major: "No Major" },
   ]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  //TO DO: Fix dialog not closing after pressing add (feature?)
+  //const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const addSchool = (newSchool: string, newMajor: string) => {
     const school = {
       name: newSchool,
@@ -18,7 +21,7 @@ const School = () => {
     };
     //TO DO: Add to database
     setSchool([...schools, school]);
-    setIsDialogOpen(false);
+    //setIsDialogOpen(false);
   };
   return (
     <div>
