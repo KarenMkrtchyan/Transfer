@@ -10,8 +10,6 @@ This is an app designed specifically for California Community College students t
 
 ## Technologies Used
 
-### Frontend
-
 - React (TypeScript)
 - Tailwind CSS
 - shadcn/ui
