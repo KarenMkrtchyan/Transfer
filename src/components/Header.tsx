@@ -1,26 +1,26 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import "./Header.css";
-import { Button } from "@/components/ui/button"
- 
-type HeaderProps = {
-  setPage: (page: "school" | "required" | "course") => void;
-}
-type ButtonProps = {
-  title: string;
-  click: () => void;
-}
+import logo from "../graphics/Wild-Bear-Logo.svg";
 
-function ButtonGhost({title, click}: ButtonProps) {
-  return <Button onClick={click} variant="ghost">{title}</Button>
-}
-
-const Header = ({setPage}: HeaderProps) => {
+const Header = () => {
   return (
     <header className="header">
+      <Link to="">
+        <img style={{ width: 100 }} src={logo} alt="logo"></img>
+      </Link>
       <nav className="nav">
-        <ButtonGhost click={()=>setPage("school")} title="Schools and Majors"/>
-        <ButtonGhost click={()=>setPage("required")} title="Required and Recommended" />
-        <ButtonGhost click={()=>setPage("course")} title="Course Plan"/>
+        <Button variant="ghost" asChild>
+          <Link to="/home">Schools and Majors</Link>
+        </Button>
+        <Button variant="ghost" asChild>
+          <Link to="/home/required">Required and Recommended Courses</Link>
+        </Button>
+        <Button variant="ghost" asChild>
+          <Link to="/home/course">Course Plan</Link>
+        </Button>
       </nav>
+      <Button>Log Out</Button>
     </header>
   );
 };

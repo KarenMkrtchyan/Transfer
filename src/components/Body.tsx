@@ -1,20 +1,16 @@
-import "./Body.css";
+import { Route, Routes } from "react-router-dom";
 import School from "./School";
+import Required from "./Required";
+import Course from "./Course";
 
-type BodyProps = {
-  page: "school" | "required" | "course";
-}
-
-const Body = ({page}: BodyProps) => {
-  console.log(page);
-  if(page === "school") {
-    return <School />;
-  } else if(page === "required") {
-    return <div>Required</div>;
-  } else if(page === "course") {
-    return <div>Course</div>;
-  }
-  return <div>404, No Tomfoolery Allowed!</div>;
+const Body = () => {
+  return (
+    <Routes>
+      <Route path="/home/" element={<School />} />
+      <Route path="/home/required" element={<Required />} />
+      <Route path="/home/course" element={<Course />} />
+    </Routes>
+  );
 };
 
 export default Body;

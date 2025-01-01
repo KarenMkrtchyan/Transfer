@@ -1,16 +1,27 @@
 import React from "react";
-import Header from "./components/Header";
-import Body from "./components/Body";
-import "./App.css"
+import Landing from "./Landing.tsx";
+import School from "./components/School.tsx";
+import Required from "./components/Required.tsx";
+import Course from "./components/Course.tsx";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header.tsx";
 
 const App: React.FC = () => {
-  const [page, setPage] = React.useState<"school" | "required" | "course">("school");
-
   return (
-    <div className="app-container">
-      <Header setPage={setPage} />
-      <Body page={page} />
-    </div>
+    <>
+      <Header />
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/home">
+            <Route path="" element={<School />} />
+            <Route path="required" element={<Required />} />
+            <Route path="course" element={<Course />} />
+          </Route>
+        </Routes>
+      </div>
+    </>
   );
 };
 
