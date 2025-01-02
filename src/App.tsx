@@ -6,6 +6,7 @@ import Course from "./components/Course.tsx";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header.tsx";
+import {guestLogIn} from "./utils/fire.ts"
 
 const App: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const App: React.FC = () => {
       <Header />
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Landing guestLogIn={guestLogIn} />} />
           <Route path="/home">
             <Route path="" element={<School />} />
             <Route path="required" element={<Required />} />

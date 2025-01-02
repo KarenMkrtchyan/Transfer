@@ -65,8 +65,11 @@ const HeroContainer = () => {
     </div>
   );
 };
+type LandingProps = {
+  guestLogIn: () => void;
+}
 
-const Landing: React.FC = () => {
+const Landing = ({guestLogIn}: LandingProps) => {
   return (
     <div
       className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
