@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import "./Header.css";
-import logo from "../graphics/Wild-Bear-Logo.svg";
+import logo from "../graphics/logo.svg";
 
 const Header = () => {
   return (
     <header className="header">
-      <Link to="">
-        <img style={{ width: 100 }} src={logo} alt="logo"></img>
+      <Link className="logoContainer" to="">
+        <img className="logo" src={logo} alt="logo"></img>
+        <h1 className="title">Get out</h1>
       </Link>
       <nav className="nav">
         <Button variant="ghost" asChild>

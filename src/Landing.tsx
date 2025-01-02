@@ -22,10 +22,10 @@ const HeroSection = () => {
       </div>
       <div className="flex flex-wrap gap-3">
         <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#378fe6] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base">
-          <span className="truncate">Create an account</span>
+          <span className="truncate">Log in with Google</span>
         </button>
         <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base">
-          <span className="truncate">Log in</span>
+          <span className="truncate">Guest</span>
         </button>
       </div>
     </div>
