@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import "./Header.css";
 import logo from "../graphics/logo.svg";
+import { logOut } from "@/utils/fire";
 
 const Header = () => {
   return (
@@ -21,7 +22,7 @@ const Header = () => {
           <Link to="/home/course">Course Plan</Link>
         </Button>
       </nav>
-      <Button>Log Out</Button>
+      <Button onClick={logOut}>Log Out</Button>
     </header>
   );
 };
