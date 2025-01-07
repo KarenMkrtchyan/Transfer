@@ -1,9 +1,10 @@
-import { guestLogIn, googleLogIn, userSignedIn } from "@/utils/fire";
+import { guestLogIn, googleLogIn } from "@/utils/auth";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { auth } from "@/utils/firebaseConfig";
 
 const LogInInterface = () => {
-  if (userSignedIn) {
+  if (auth.currentUser) {
     return (
       <span className="flex items-center gap-2 text-white bg-green-500 px-3 py-1 rounded-full">
         <Check />

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./mode-toggle";
 import "./Header.css";
 import logo from "../graphics/logo.svg";
-import { logOut } from "@/utils/fire";
+import { logOut } from "@/utils/auth";
 
 const Header = () => {
   return (
