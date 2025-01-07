@@ -1,27 +1,26 @@
+import { addMajor, getSchools } from "@/utils/db";
 import { DialogAddSchool } from "../components/ui/shadcn";
-import { useState } from "react";
+import { useDebugValue, useEffect, useState } from "react";
 type School = {
   name: string;
   major: string;
 };
 
 const School = () => {
-  //TO DO: Fetch this from database
   const [schools, setSchool] = useState<School[]>([
     { name: "No Added Schools Yet", major: "No Major" },
   ]);
-
-  //TO DO: Fix dialog not closing after pressing add (feature?)
-  //const [isDialogOpen, setIsDialogOpen] = useState(false);
+  useEffect(() => {
+    getSchools();
+  }, [schools]);
 
   const addSchool = (newSchool: string, newMajor: string) => {
     const school = {
       name: newSchool,
       major: newMajor,
     };
-    //TO DO: Add to database
+    addMajor(newSchool, newMajor);
     setSchool([...schools, school]);
-    //setIsDialogOpen(false);
   };
   return (
     <div>
