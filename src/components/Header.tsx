@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "./mode-toggle";
 import "./Header.css";
 import logo from "../graphics/logo.svg";
 import { logOut } from "@/utils/fire";
@@ -22,7 +23,10 @@ const Header = () => {
           <Link to="/home/course">Course Plan</Link>
         </Button>
       </nav>
-      <Button onClick={logOut}>Log Out</Button>
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <ModeToggle />
+        <Button onClick={logOut}>Log Out</Button>
+      </div>
     </header>
   );
 };

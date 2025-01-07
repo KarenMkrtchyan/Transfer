@@ -6,10 +6,11 @@ import Course from "./pages/Course.tsx";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header.tsx";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const App: React.FC = () => {
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />
       <div className="app-container">
         <Routes>
@@ -21,7 +22,7 @@ const App: React.FC = () => {
           </Route>
         </Routes>
       </div>
-    </>
+    </ThemeProvider>
   );
 };
 

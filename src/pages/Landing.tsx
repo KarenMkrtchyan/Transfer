@@ -1,8 +1,26 @@
-import { guestLogIn } from "@/utils/fire";
+import { guestLogIn, googleLogIn, userSignedIn } from "@/utils/fire";
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 
-const guestClick = () => {
-  console.log("Guest log in");
-  guestLogIn();
+const LogInInterface = () => {
+  if (userSignedIn) {
+    return (
+      <span className="flex items-center gap-2 text-white bg-green-500 px-3 py-1 rounded-full">
+        <Check />
+        <p>Signed In</p>
+      </span>
+    );
+  }
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Button variant="outline" onClick={googleLogIn}>
+        <span className="truncate">Log in with Google</span>
+      </Button>
+      <Button variant="secondary" onClick={guestLogIn}>
+        <span className="truncate">Guest</span>
+      </Button>
+    </div>
+  );
 };
 
 const Landing = () => {
@@ -25,18 +43,9 @@ const Landing = () => {
             more.
           </h2>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#378fe6] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base">
-            <span className="truncate">Log in with Google</span>
-          </button>
-          <button
-            onClick={guestClick}
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#f0f2f4] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base"
-          >
-            <span className="truncate">Guest</span>
-          </button>
-        </div>
+        <LogInInterface />
       </div>
+
       <div className="flex flex-col gap-10 px-4 py-10 @container">
         <div className="flex flex-col gap-4">
           <h1 className="text-[#111418] text-[32px] font-bold leading-tight @[480px]:text-4xl max-w-[720px]">

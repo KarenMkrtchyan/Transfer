@@ -5,6 +5,8 @@ import {
   signInAnonymously,
   onAuthStateChanged,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -26,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 console.log("Firebase initialized");
 
@@ -44,6 +47,31 @@ function guestLogIn() {
     });
 }
 
+function googleLogIn() {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (credential) {
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log(user);
+      } else {
+        throw new Error("Credential is null");
+      }
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+}
+
 function logOut() {
   return signOut(auth)
     .then(() => {
@@ -54,12 +82,16 @@ function logOut() {
     });
 }
 
+let userSignedIn = false;
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    userSignedIn = true;
     console.log(`User is signed in with id ${user.uid}`);
   } else {
+    userSignedIn = false;
     console.log("User is signed out");
   }
 });
 
-export { guestLogIn, logOut };
+export { guestLogIn, logOut, googleLogIn, userSignedIn };
