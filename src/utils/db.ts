@@ -1,5 +1,5 @@
 import { db, auth } from "./firebaseConfig.ts";
-import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, query, setDoc } from "firebase/firestore";
 
 async function addMajor(schoolName: string, major: string) {
   // file structure
@@ -43,24 +43,15 @@ async function getSchools() {
     console.error("User not signed in");
     return [];
   }
-  const schools = {};
-  try {
-    const docRef = doc(db, `${auth.currentUser.uid}/schools`)
-// Fetch all subcollections under this document
-  listCollections(db, docRef).then(subcollections => {
-    subcollections.forEach(subcollection => {
-        console.log("Subcollection ID: ", subcollection.id);
-        // Optionally, fetch documents from each subcollection
-        subcollection.get().then(snapshot => {
-            snapshot.forEach(doc => {
-                console.log(doc.id, " => ", doc.data());
-            });
-        });
-    });
-}).catch(error => {
-    console.error("Error fetching subcollections: ", error);
-});
+  const schools:any = []; // fix type to be specific object
+  const docRef = doc(db, auth.currentUser.uid, "schools")
+  const docSnap = await getDoc(docRef)
+  if(docSnap.exists()){
+    console.log("Schools document", docSnap.data)
+  } else{
+    console.warn("User doesn't have schools doc")
   }
+  return schools
 }
 
 export { addMajor, getSchools };

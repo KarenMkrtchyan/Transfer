@@ -11,6 +11,17 @@
   background-color: white;
 }
 
+.deactivated:hover{
+  color: rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.deactivated{
+  color: rgba(0, 0, 0, 0.4);
+}
+
 .logoContainer {
   width: 150px;
   height: 70px;

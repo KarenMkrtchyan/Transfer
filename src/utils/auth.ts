@@ -52,12 +52,4 @@ function logOut() {
     });
 }
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log(`User signed in with id ${user.uid}`);
-  } else {
-    console.log("User signed out");
-  }
-});
-
 export { guestLogIn, logOut, googleLogIn };

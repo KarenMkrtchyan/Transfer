@@ -11,8 +11,10 @@ const School = () => {
     { name: "No Added Schools Yet", major: "No Major" },
   ]);
   useEffect(() => {
-    getSchools();
-  }, [schools]);
+    getSchools().then((newList)=>{
+      setSchool(newList)
+    });
+  }, []);
 
   const addSchool = (newSchool: string, newMajor: string) => {
     const school = {
