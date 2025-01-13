@@ -35,24 +35,31 @@ async function addMajor(schoolName: string, major: string) {
 }
 
 async function getSchools() {
-  console.log("fetching schools");
-  const schools = {};
-  try {
-    if (auth.currentUser) {
-      const userSchoolsDoc = doc(db, `${auth.currentUser.uid}/schools`);
-      const schoolNamesSnap = await getDocs(
-        collection(userSchoolsDoc, "schoolName")
-      );
-      schoolNamesSnap.forEach((doc) => {
-        console.log("someething");
-        //console.log(doc.id, " => ", doc.data());
-      });
-
-      return schools;
-    }
-  } catch (e) {
+  if (auth.currentUser) {
+    console.log(
+      `User with ID ${auth.currentUser.uid} is trying to fetch schools`
+    );
+  } else {
     console.error("User not signed in");
     return [];
+  }
+  const schools = {};
+  try {
+    const docRef = doc(db, `${auth.currentUser.uid}/schools`)
+// Fetch all subcollections under this document
+  listCollections(db, docRef).then(subcollections => {
+    subcollections.forEach(subcollection => {
+        console.log("Subcollection ID: ", subcollection.id);
+        // Optionally, fetch documents from each subcollection
+        subcollection.get().then(snapshot => {
+            snapshot.forEach(doc => {
+                console.log(doc.id, " => ", doc.data());
+            });
+        });
+    });
+}).catch(error => {
+    console.error("Error fetching subcollections: ", error);
+});
   }
 }
 

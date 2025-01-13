@@ -2,9 +2,20 @@ import { guestLogIn, googleLogIn } from "@/utils/auth";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { auth } from "@/utils/firebaseConfig";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 const LogInInterface = () => {
-  if (auth.currentUser) {
+  const [signInStatus, setSignInStatus] = useState(auth.currentUser);
+  useEffect(() => {
+    onAuthStateChanged(auth, () => {
+      console.log("update UI log in status");
+      setSignInStatus(auth.currentUser);
+    });
+  });
+  //TO DO: Have access to the rest of the application blocked when user is not signed in
+
+  if (signInStatus) {
     return (
       <span className="flex items-center gap-2 text-white bg-green-500 px-3 py-1 rounded-full">
         <Check />

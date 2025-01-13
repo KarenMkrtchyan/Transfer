@@ -1,6 +1,6 @@
 import { addMajor, getSchools } from "@/utils/db";
 import { DialogAddSchool } from "../components/ui/shadcn";
-import { useDebugValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 type School = {
   name: string;
   major: string;
