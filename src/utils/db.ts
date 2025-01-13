@@ -1,5 +1,5 @@
 import { db, auth } from "./firebaseConfig.ts";
-import { collection, doc, getDoc, query, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 async function addMajor(schoolName: string, major: string) {
   // file structure

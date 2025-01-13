@@ -2,7 +2,6 @@ import { auth } from "./firebaseConfig.ts";
 
 import {
   signInAnonymously,
-  onAuthStateChanged,
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
