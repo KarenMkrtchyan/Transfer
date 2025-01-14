@@ -40,18 +40,19 @@ async function getSchools() {
       `User with ID ${auth.currentUser.uid} is trying to fetch schools`
     );
   } else {
+    //TODO redirect user back to sign in page
     console.error("User not signed in");
     return [];
   }
-  const schools:any = []; // fix type to be specific object
-  const docRef = doc(db, auth.currentUser.uid, "schools")
-  const docSnap = await getDoc(docRef)
-  if(docSnap.exists()){
-    console.log("Schools document", docSnap.data)
-  } else{
-    console.warn("User doesn't have schools doc")
+  const schools: any = []; // fix type to be specific object
+  const docRef = doc(db, auth.currentUser.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    console.log("Schools document", docSnap.data());
+  } else {
+    console.warn("User doesn't have schools doc");
   }
-  return schools
+  return schools;
 }
 
 export { addMajor, getSchools };
