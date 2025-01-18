@@ -35,6 +35,7 @@ async function addMajor(schoolName: string, major: string) {
               required_courses: [], //TODO Fetch from Assist
               reccomended_courses: [],
               ge_requirements: [],
+              qualify: 0,
             },
           ],
         };
@@ -49,6 +50,7 @@ async function addMajor(schoolName: string, major: string) {
               required_courses: [], //TODO Fetch from Assist
               reccomended_courses: [],
               ge_requirements: [],
+              qualify: 0,
             },
           ],
         };
@@ -77,11 +79,12 @@ async function getSchools() {
   const schools: any = []; // fix type to be specific object
   const q = await getDoc(doc(db, "users", auth.currentUser.uid));
   if (q.exists()) {
-    console.log("schools fetchs correctly");
     const user = await q.data();
+    console.log("schools fetchedL", user);
     return user.schools;
   } else {
     console.log("school fetch failed");
+    return [];
   }
 
   return schools;
