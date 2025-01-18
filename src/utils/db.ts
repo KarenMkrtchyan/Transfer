@@ -75,12 +75,14 @@ async function getSchools() {
     return [];
   }
   const schools: any = []; // fix type to be specific object
-  const q = query(collection(db, "uesrs"), where("capital", "==", true));
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-  });
+  const q = await getDoc(doc(db, "users", auth.currentUser.uid));
+  if (q.exists()) {
+    console.log("schools fetchs correctly");
+    const user = await q.data();
+    return user.schools;
+  } else {
+    console.log("school fetch failed");
+  }
 
   return schools;
 }
