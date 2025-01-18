@@ -1,5 +1,8 @@
-import { addMajor, getSchools } from "@/utils/db";
-import { DialogAddSchool } from "../components/ui/shadcn";
+import { addMajor, getSchools, addCommunity } from "@/utils/db";
+import {
+  DialogAddSchool,
+  SelectCommunityCollage,
+} from "../components/ui/shadcn";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -10,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { BadgeAlert, BadgeCheck, BadgeMinus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type School = {
   ge_requirements: string[];
@@ -72,6 +76,7 @@ const SchoolsTable = ({ schools }: { schools: School[] }) => {
 
 const School = () => {
   const [schools, setSchool] = useState<School[]>(emptySchoolField);
+  const [communityCollage, setCommunityCollage] = useState<string>("");
   useEffect(() => {
     getSchools().then((newList) => {
       setSchool(newList);
@@ -84,15 +89,33 @@ const School = () => {
       setSchool(newList);
     });
   };
+
+  const addCommunityCollage = (name: string) => {
+    addCommunity(name);
+    setCommunityCollage(name);
+  };
+
   return (
     <div className="flex flex-col gap-4 px-3">
+      <h1 className="text-3xl font-bold ">Transfer Schools</h1>
       <SchoolsTable schools={schools} />
-      <div className="flex justify-center">
+      <div className="flex flex-col w-1/3 gap-3 items-center mx-auto">
         <DialogAddSchool
           newSchool="UC Irvine"
           newMajor="Computer Science"
           addSchool={addSchool}
         />
+      </div>
+      <h1 className="text-3xl font-bold ">Your Community Collage</h1>
+      <div className="flex flex-col w-1/3 gap-3 items-center mx-auto">
+        {communityCollage === "" ? (
+          <SelectCommunityCollage addSchool={addCommunityCollage} />
+        ) : (
+          <div className="flex flex-col gap-2 items-center">
+            <p>{communityCollage}</p>
+            <Button>Change</Button>
+          </div>
+        )}
       </div>
     </div>
   );

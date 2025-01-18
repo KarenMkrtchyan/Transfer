@@ -1,13 +1,5 @@
 import { db, auth } from "./firebaseConfig.ts";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 async function fetchUserFile(uid: string) {
   const docSnap = await getDoc(doc(db, "users", uid));
@@ -43,7 +35,7 @@ async function addMajor(schoolName: string, major: string) {
         updatedUser = {
           id: user.id,
           schools: [
-            ...user.schools,
+            ...user.schools, //TODO Check if school already exists
             {
               name: schoolName,
               major: major,
@@ -66,28 +58,33 @@ async function addMajor(schoolName: string, major: string) {
   }
 }
 
-async function getSchools() {
-  if (auth.currentUser) {
-    console.log(
-      `User with ID ${auth.currentUser.uid} is trying to fetch schools`
-    );
-  } else {
-    //TODO redirect user back to sign in page
-    console.error("User not signed in");
-    return [];
+async function addCommunity(schoolName: string) {
+  try {
+    if (auth.currentUser) {
+      const user = await fetchUserFile(auth.currentUser.uid);
+      const updatedUser = {
+        id: user.id,
+        schools: user.schools,
+        communityCollage: schoolName,
+      };
+      await setDoc(doc(db, "users", auth.currentUser.uid), updatedUser); // a lot of data is being overwritten and its not neccesary, look into optimization
+      console.log(`Added ${schoolName}`);
+    } else {
+      console.error("No authenticated user found.");
+    }
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
-  const schools: any = []; // fix type to be specific object
-  const q = await getDoc(doc(db, "users", auth.currentUser.uid));
-  if (q.exists()) {
-    const user = await q.data();
-    console.log("schools fetchedL", user);
-    return user.schools;
-  } else {
-    console.log("school fetch failed");
-    return [];
-  }
-
-  return schools;
 }
 
-export { addMajor, getSchools };
+async function getSchools() {
+  if (auth.currentUser) {
+    const user = await fetchUserFile(auth.currentUser.uid);
+    return user.schools;
+  } else {
+    console.error("No authenticated user found.");
+    return [];
+  }
+}
+
+export { addMajor, getSchools, fetchUserFile, addCommunity };
