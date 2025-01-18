@@ -1,30 +1,60 @@
 import { db, auth } from "./firebaseConfig.ts";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+
+async function fetchUserFile(uid: string) {
+  const docSnap = await getDoc(doc(db, "users", uid));
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.warn("creating new user file");
+    return {};
+  }
+}
 
 async function addMajor(schoolName: string, major: string) {
-  // file structure
-  /*
-  user.uid (collection)
-    schools (document)
-        schoolName (subcollection)
-            majorName (document)
-            majorName (document)
-  */
   try {
     if (auth.currentUser) {
-      const newMajor = doc(
-        db,
-        auth.currentUser.uid,
-        "schools",
-        schoolName,
-        major
-      );
-      await setDoc(newMajor, {
-        major: major,
-        requiredCourses: [], //TODO: Fetch from Assist.org
-        reccomendedCourses: [], //TODO: Fetch from Assist.org
-        qualify: 0, // 0 for not qualified, 1 for have required, 2 for have reccomended
-      });
+      const user = await fetchUserFile(auth.currentUser.uid);
+      let updatedUser: Object;
+      if (Object.keys(user).length === 0) {
+        //New users need to be initated not updated
+        updatedUser = {
+          id: auth.currentUser.uid,
+          schools: [
+            {
+              name: schoolName,
+              major: major,
+              required_courses: [], //TODO Fetch from Assist
+              reccomended_courses: [],
+              ge_requirements: [],
+            },
+          ],
+        };
+      } else {
+        updatedUser = {
+          id: user.id,
+          schools: [
+            ...user.schools,
+            {
+              name: schoolName,
+              major: major,
+              required_courses: [], //TODO Fetch from Assist
+              reccomended_courses: [],
+              ge_requirements: [],
+            },
+          ],
+        };
+      }
+
+      await setDoc(doc(db, "users", auth.currentUser.uid), updatedUser);
       console.log(`Added ${major} at ${schoolName}`);
     } else {
       console.error("No authenticated user found.");
@@ -45,13 +75,13 @@ async function getSchools() {
     return [];
   }
   const schools: any = []; // fix type to be specific object
-  const docRef = doc(db, auth.currentUser.uid);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    console.log("Schools document", docSnap.data());
-  } else {
-    console.warn("User doesn't have schools doc");
-  }
+  const q = query(collection(db, "uesrs"), where("capital", "==", true));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+  });
+
   return schools;
 }
 
