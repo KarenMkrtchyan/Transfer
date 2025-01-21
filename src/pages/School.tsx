@@ -48,7 +48,7 @@ const SchoolsTable = ({ schools }: { schools: School[] }) => {
         </TableHeader>
         <TableBody>
           {schools.map((school) => (
-            <TableRow key={school.name}>
+            <TableRow key={`${school.name}${school.major}`}>
               <TableCell className="text-center">{school.name}</TableCell>
               <TableCell className="text-center">{school.major}</TableCell>
               <TableCell className="flex justify-center items-center">
@@ -74,13 +74,16 @@ const SchoolsTable = ({ schools }: { schools: School[] }) => {
   );
 };
 
-const School = () => {
+const School = ({ userFile }: { userFile: any }) => {
   const [schools, setSchool] = useState<School[]>(emptySchoolField);
   const [communityCollage, setCommunityCollage] = useState<string>("");
   useEffect(() => {
-    getSchools().then((newList) => {
-      setSchool(newList);
-    });
+    userFile.schools
+      ? setSchool(userFile.schools)
+      : setSchool(emptySchoolField);
+    userFile.communityCollage
+      ? setCommunityCollage(userFile.communityCollage)
+      : setCommunityCollage("");
   }, []);
 
   const addSchool = (newSchool: string, newMajor: string) => {

@@ -47,7 +47,7 @@ export function DialogAddSchool({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 py-4">
+        <form className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               School Name
@@ -70,16 +70,15 @@ export function DialogAddSchool({
               className="col-span-3"
             />
           </div>
-        </div>
-
-        <DialogFooter>
-          <Button
-            onClick={() => addSchool(newSchoolState, newMajorState)}
-            type="submit"
-          >
-            Add
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button
+              onClick={() => addSchool(newSchoolState, newMajorState)}
+              type="submit"
+            >
+              Add
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -104,7 +103,7 @@ export function SelectCommunityCollage({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 py-4">
+        <form className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Name
@@ -116,13 +115,69 @@ export function SelectCommunityCollage({
               className="col-span-3"
             />
           </div>
-        </div>
+          <DialogFooter>
+            <Button onClick={() => addSchool(newSchoolState)} type="submit">
+              Add
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
-        <DialogFooter>
-          <Button onClick={() => addSchool(newSchoolState)} type="submit">
-            Add
-          </Button>
-        </DialogFooter>
+export function ConfigureCourses({
+  handleConfigureCourses,
+}: {
+  handleConfigureCourses: (startSem: string, numOfSem: number) => void;
+}) {
+  const [startSem, setStartSem] = useState("");
+  const [numOfSem, setNumOfSem] = useState(0);
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Configure Schedule</Button>
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Configure Schedule</DialogTitle>
+          <DialogDescription>
+            Select when you start school and when you want to transfer
+          </DialogDescription>
+        </DialogHeader>
+
+        <form className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Start Semester
+            </Label>
+            <Input
+              id="name"
+              value={startSem}
+              onChange={(e) => setStartSem(e.target.value)}
+              className="col-span-3"
+            />
+            <Label htmlFor="numOfSem" className="text-right">
+              Number of Semesters(or quarters) left
+            </Label>
+            <Input
+              id="numOfSem"
+              type="number"
+              value={numOfSem}
+              onChange={(e) => setNumOfSem(parseInt(e.target.value))}
+              className="col-span-3"
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              onClick={() => handleConfigureCourses(startSem, numOfSem)}
+              type="submit"
+            >
+              Finish
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
