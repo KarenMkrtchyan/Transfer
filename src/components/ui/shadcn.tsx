@@ -21,12 +21,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Check } from "lucide-react";
 
 type DialogAddSchoolProps = {
   newSchool: string;
@@ -47,6 +47,12 @@ const addSchoolSchema = z.object({
 const configureCourseSchema = z.object({
   startSem: z.string(), //TODO: Add autocomplete and enum validation
   numOfSem: z.number(),
+  semesters: z.object({
+    summer: z.boolean(),
+    fall: z.boolean(),
+    winter: z.boolean(),
+    spring: z.boolean(),
+  }),
 });
 
 export function ButtonPrimary({ text }: { text: string }) {
@@ -157,32 +163,36 @@ export function SelectCommunityCollage({
 export function ConfigureCourses({
   handleConfigureCourses,
 }: ConfigureCoursesProps) {
-  const [startSem, setStartSem] = useState("");
-  const [numOfSem, setNumOfSem] = useState(0);
-
   const form = useForm<z.infer<typeof configureCourseSchema>>({
     resolver: zodResolver(configureCourseSchema),
     defaultValues: {
       startSem: "Fall",
       numOfSem: 4,
+      semesters: {
+        summer: false,
+        fall: true,
+        winter: false,
+        spring: true,
+      },
     },
   });
 
   function onSubmit(data: z.infer<typeof configureCourseSchema>) {
+    console.log(data);
     handleConfigureCourses(data.startSem, data.numOfSem);
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Configure Schedule</Button>
+        <Button>Configure Planner</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Configure Schedule</DialogTitle>
+          <DialogTitle>Configure Plan</DialogTitle>
           <DialogDescription>
-            Select when you start school and when you want to transfer
+            Build your course planner by selecting the start semester and the
           </DialogDescription>
         </DialogHeader>
 
@@ -196,26 +206,132 @@ export function ConfigureCourses({
               name="startSem"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Enter Start Sem</FormLabel>
+                  <FormLabel>Start Semester</FormLabel>
                   <FormControl>
                     <Input placeholder="Fall 25" {...field} />
                   </FormControl>
                   <FormDescription>
-                    This is your public display name.
+                    Enter the semster you want to start commuinty collage in.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <FormField
+              control={form.control}
+              name="numOfSem"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Semesters</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Enter the number of semster you want in your planner.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="semesters.summer"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="summer"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <label
+                        htmlFor="summer"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Summer
+                      </label>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="semesters.fall"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="fall"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <label
+                        htmlFor="fall"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Fall
+                      </label>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="semesters.winter"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="winter"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <label
+                        htmlFor="winter"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Winter
+                      </label>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="semesters.spring"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="spring"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                      <label
+                        htmlFor="spring"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Spring
+                      </label>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <DialogFooter>
-              <Button
-                onClick={() => handleConfigureCourses(startSem, numOfSem)}
-                type="submit"
-              >
-                Finish
-              </Button>
+              <Button type="submit">Finish</Button>
             </DialogFooter>
           </form>
         </Form>
