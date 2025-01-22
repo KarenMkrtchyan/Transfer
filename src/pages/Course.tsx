@@ -31,12 +31,26 @@ const SemesterCourses = () => {
   );
 };
 
-const CourseContainer = () => {
-  return <p>hi</p>;
+const CourseContainer = ({
+  numOfSem,
+  startSem,
+}: {
+  numOfSem: number;
+  startSem: string;
+}) => {
+  const semesters: React.ReactNode[] = [];
+  for (let i = 0; i < numOfSem; i++) {
+    return semesters.push(<SemesterCourses key={i} />); // If breaks, change key from index
+  }
+
+  return <>{semesters.map((semester) => semester)}</>;
 };
 
 function Course() {
   const [courses, setCourses] = useState<string[]>([]);
+  const [numOfSem, setNumOfSem] = useState(0);
+  const [startSem, setStartSem] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       if (auth.currentUser) {
@@ -48,12 +62,14 @@ function Course() {
   }, []);
   const handleConfig = (startSem: string, numOfSem: number) => {
     console.log(startSem, numOfSem);
+    setNumOfSem(numOfSem);
+    setStartSem(startSem);
   };
 
   return courses.length === 0 ? (
     <ConfigureCourses handleConfigureCourses={handleConfig} />
   ) : (
-    <CourseContainer />
+    <CourseContainer numOfSem={numOfSem} startSem={startSem} />
   );
 }
 

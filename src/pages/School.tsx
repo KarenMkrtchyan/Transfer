@@ -14,6 +14,12 @@ import {
 } from "@/components/ui/table";
 import { BadgeAlert, BadgeCheck, BadgeMinus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type School = {
   ge_requirements: string[];
@@ -53,17 +59,44 @@ const SchoolsTable = ({ schools }: { schools: School[] }) => {
               <TableCell className="text-center">{school.major}</TableCell>
               <TableCell className="flex justify-center items-center">
                 {school.qualify === 2 ? (
-                  <span title="Meeting all of the requirements and some reccomended courses">
-                    <BadgeCheck style={{ color: "green" }} />
-                  </span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <BadgeCheck style={{ color: "green" }} />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>
+                          Meeting all of the requirements and reccomended
+                          courses
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 ) : school.qualify === 1 ? (
-                  <span title="Meeting all of the requirements but no reccomended courses">
-                    <BadgeAlert style={{ color: "yellow" }} />
-                  </span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <BadgeAlert style={{ color: "yellow" }} />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>
+                          Meeting all of the requirements but no reccomended
+                          courses
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 ) : (
-                  <span title="Not meeting some reccomended courses">
-                    <BadgeMinus style={{ color: "red" }} />
-                  </span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <BadgeMinus style={{ color: "red" }} />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Not meeting some reccomended courses</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 )}
               </TableCell>
             </TableRow>

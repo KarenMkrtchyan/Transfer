@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +11,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 type DialogAddSchoolProps = {
   newSchool: string;
@@ -20,6 +36,18 @@ type DialogAddSchoolProps = {
 type selectCommunityCollageProps = {
   addSchool: (newSchool: string) => void;
 };
+type ConfigureCoursesProps = {
+  handleConfigureCourses: (startSem: string, numOfSem: number) => void;
+};
+
+const addSchoolSchema = z.object({
+  newSchool: z.string(), //TODO: Add autocomplete and enum validation
+  newMajor: z.string(),
+});
+const configureCourseSchema = z.object({
+  startSem: z.string(), //TODO: Add autocomplete and enum validation
+  numOfSem: z.number(),
+});
 
 export function ButtonPrimary({ text }: { text: string }) {
   return <Button>{text}</Button>;
@@ -128,11 +156,22 @@ export function SelectCommunityCollage({
 
 export function ConfigureCourses({
   handleConfigureCourses,
-}: {
-  handleConfigureCourses: (startSem: string, numOfSem: number) => void;
-}) {
+}: ConfigureCoursesProps) {
   const [startSem, setStartSem] = useState("");
   const [numOfSem, setNumOfSem] = useState(0);
+
+  const form = useForm<z.infer<typeof configureCourseSchema>>({
+    resolver: zodResolver(configureCourseSchema),
+    defaultValues: {
+      startSem: "Fall",
+      numOfSem: 4,
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof configureCourseSchema>) {
+    handleConfigureCourses(data.startSem, data.numOfSem);
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -147,37 +186,39 @@ export function ConfigureCourses({
           </DialogDescription>
         </DialogHeader>
 
-        <form className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Start Semester
-            </Label>
-            <Input
-              id="name"
-              value={startSem}
-              onChange={(e) => setStartSem(e.target.value)}
-              className="col-span-3"
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid gap-4 py-4"
+          >
+            <FormField
+              control={form.control}
+              name="startSem"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Enter Start Sem</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Fall 25" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <Label htmlFor="numOfSem" className="text-right">
-              Number of Semesters(or quarters) left
-            </Label>
-            <Input
-              id="numOfSem"
-              type="number"
-              value={numOfSem}
-              onChange={(e) => setNumOfSem(parseInt(e.target.value))}
-              className="col-span-3"
-            />
-          </div>
-          <DialogFooter>
-            <Button
-              onClick={() => handleConfigureCourses(startSem, numOfSem)}
-              type="submit"
-            >
-              Finish
-            </Button>
-          </DialogFooter>
-        </form>
+            <Button type="submit">Submit</Button>
+
+            <DialogFooter>
+              <Button
+                onClick={() => handleConfigureCourses(startSem, numOfSem)}
+                type="submit"
+              >
+                Finish
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -11,7 +11,7 @@ This is an app designed specifically for California Community College students t
 ## Technologies Used
 
 - React (TypeScript)
-- Tailwind CSS
-- shadcn/ui
-- Firebase Suit
-- Assist API
+- Tailwind CSS & shadcn/ui (UI frameworks)
+- Firebase Suit (Auth, database, hosting)
+- Assist API (REST API for school data)
+- Zod & React Hook Form (type-safe, client-side valided forms)
