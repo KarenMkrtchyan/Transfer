@@ -1,4 +1,4 @@
-import { addMajor, getSchools, addCommunity } from "@/utils/db";
+import { addMajor, getSchools, addCommunity } from "@/utils/user";
 import {
   DialogAddSchool,
   SelectCommunityCollage,

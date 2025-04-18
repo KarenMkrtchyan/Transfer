@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { db, auth } from "./firebaseConfig.ts";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -6,41 +7,18 @@ async function fetchUserFile(uid: string) {
   if (docSnap.exists()) {
     return docSnap.data();
   } else {
-    console.warn("creating new user file");
+    log.warn("No instance of user when calling fetchUserFile, new one created");
     return {};
   }
 }
 
-async function fetchUserCoursePlan(uid: string) {
-  const docSnap = await getDoc(doc(db, "course_plan", uid));
-  if (docSnap.exists()) {
-    return docSnap.data().courses;
-  } else {
-    console.warn("creating new user file");
-    return [];
-  }
-}
-
-async function updateUserCoursePlan(uid: string, coursePlan: Object) {
-  try {
-    await setDoc(doc(db, "course_plan", uid), coursePlan);
-    if (import.meta.env.VITE_STATE === "debug") {
-      console.log("Document successfully written!");
-    }
-  } catch (e) {
-    console.error("Error writing document: ", e);
-  }
-}
-
 async function addMajor(schoolName: string, major: string) {
-  if (import.meta.env.VITE_STATE === "debug") {
-    console.log("Tried to add a school and major");
-    if (auth.currentUser) {
-      console.log("user id: ", auth.currentUser.uid);
-      console.log(`${major} @ ${schoolName}`);
-    } else {
-      console.log("no signed in user");
-    }
+  log.debug("Tried to add a school and major");
+  if (auth.currentUser) {
+    log.debug("user id: ", auth.currentUser.uid);
+    log.debug(`${major} @ ${schoolName}`);
+  } else {
+    log.debug("no signed in user");
   }
 
   try {
@@ -118,11 +96,4 @@ async function getSchools() {
   }
 }
 
-export {
-  addMajor,
-  getSchools,
-  fetchUserFile,
-  addCommunity,
-  fetchUserCoursePlan,
-  updateUserCoursePlan,
-};
+export { addMajor, getSchools, fetchUserFile, addCommunity };

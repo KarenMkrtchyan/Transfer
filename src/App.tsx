@@ -9,7 +9,7 @@ import Header from "./components/Header.tsx";
 import { ThemeProvider } from "@/components/theme-provider";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebaseConfig.ts";
-import { fetchUserFile } from "./utils/db.ts";
+import { fetchUserFile } from "./utils/user.ts";
 
 const App: React.FC = () => {
   const [userFile, setUserFile] = React.useState({});
