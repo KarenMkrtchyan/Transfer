@@ -24,13 +24,25 @@ async function fetchUserCoursePlan(uid: string) {
 async function updateUserCoursePlan(uid: string, coursePlan: Object) {
   try {
     await setDoc(doc(db, "course_plan", uid), coursePlan);
-    console.log("Document successfully written!");
+    if (import.meta.env.VITE_STATE === "debug") {
+      console.log("Document successfully written!");
+    }
   } catch (e) {
     console.error("Error writing document: ", e);
   }
 }
 
 async function addMajor(schoolName: string, major: string) {
+  if (import.meta.env.VITE_STATE === "debug") {
+    console.log("Tried to add a school and major");
+    if (auth.currentUser) {
+      console.log("user id: ", auth.currentUser.uid);
+      console.log(`${major} @ ${schoolName}`);
+    } else {
+      console.log("no signed in user");
+    }
+  }
+
   try {
     if (auth.currentUser) {
       const user = await fetchUserFile(auth.currentUser.uid);

@@ -46,7 +46,7 @@ const CourseContainer = ({
   return <>{semesters.map((semester) => semester)}</>;
 };
 
-function Course() {
+const Course = () => {
   const [courses, setCourses] = useState<string[]>([]);
   const [numOfSem, setNumOfSem] = useState(0);
   const [startSem, setStartSem] = useState("");
@@ -71,6 +71,6 @@ function Course() {
   ) : (
     <CourseContainer numOfSem={numOfSem} startSem={startSem} />
   );
-}
+};
 
 export default Course;
