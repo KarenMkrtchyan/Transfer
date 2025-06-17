@@ -1,4 +1,4 @@
-# California Community College Transfer Planner
+# California Community College Transfer Planner (In Progress ...)
 
 This is an app designed specifically for California Community College students to help them plan their course schedules and ensure they meet the requirements for transferring to UC and CSU schools.
 
